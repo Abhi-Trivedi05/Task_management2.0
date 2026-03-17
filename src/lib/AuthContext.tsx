@@ -33,6 +33,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const fetchUser = async () => {
       try {
         const res = await fetch("/api/auth/me", { credentials: "include" });
+        if (res.status === 401) {
+          setUser(null);
+          if (pathname !== "/login") {
+            router.push("/login");
+          }
+          return;
+        }
+
         if (res.ok) {
           const data = await res.json();
           setUser(data.user);

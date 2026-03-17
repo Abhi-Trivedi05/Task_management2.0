@@ -8,14 +8,14 @@ export async function GET() {
     const session = await getAuthSession();
     if (!session) {
       console.log("No valid session found in me route");
-      return NextResponse.json({ user: null }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     await connectToDatabase();
     
     const user = await User.findById(session.userId).select("-passwordHash");
     if (!user) {
-      return NextResponse.json({ user: null }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     return NextResponse.json(
