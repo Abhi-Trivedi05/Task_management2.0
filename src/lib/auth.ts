@@ -21,7 +21,8 @@ export const signToken = (payload: JwtPayload): string => {
 export const verifyToken = (token: string): JwtPayload | null => {
   try {
     return jwt.verify(token, JWT_SECRET) as JwtPayload;
-  } catch (error) {
+  } catch (error: any) {
+    console.error("JWT Verification failed:", error.message);
     return null;
   }
 };
@@ -34,7 +35,7 @@ export async function setAuthCookie(token: string) {
   cookieStore.set("auth_token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    sameSite: "lax",
     maxAge: 60 * 60 * 24 * 1, // 1 day
     path: "/",
   });

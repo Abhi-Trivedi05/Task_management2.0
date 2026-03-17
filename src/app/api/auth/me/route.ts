@@ -7,6 +7,7 @@ export async function GET() {
   try {
     const session = await getAuthSession();
     if (!session) {
+      console.log("No valid session found in me route");
       return NextResponse.json({ user: null }, { status: 401 });
     }
 
