@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-50: #f0fdfa;
+  --color-primary-100: #ccfbf1;
+  --color-primary-500: #14b8a6;
+  --color-primary-600: #0d9488;
+  --color-primary-900: #134e4a;
+  
+  --color-secondary-500: #8b5cf6;
+  --color-secondary-600: #7c3aed;
+  
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased selection:bg-primary-500 selection:text-white font-sans;
+    background-image: 
+      radial-gradient(at 0% 0%, hsla(169, 100%, 80%, 0.3) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, hsla(250, 100%, 80%, 0.3) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, hsla(200, 100%, 80%, 0.3) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, hsla(300, 100%, 80%, 0.3) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/70 backdrop-blur-lg border border-white/20 shadow-[0_8px_30px_rgb(0,0,0,0.04)];
+  }
+  
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-md border border-white/50 shadow-xl rounded-2xl;
+  }
+  
+  .input-modern {
+    @apply block w-full rounded-xl border-0 py-2.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 bg-white/50 focus:bg-white transition-all duration-300 px-4;
+  }
+  
+  .btn-primary {
+    @apply inline-flex justify-center items-center gap-2 rounded-xl bg-gradient-to-r from-primary-600 to-secondary-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 hover:scale-[1.02] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 transition-all duration-300 active:scale-[0.98];
+  }
+  
+  .btn-secondary {
+    @apply inline-flex justify-center items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-200 hover:bg-slate-50 hover:text-slate-900 hover:ring-slate-300 transition-all duration-300 active:scale-[0.98];
+  }
+}
+
