@@ -19,14 +19,8 @@ export default function Home() {
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
           <Link 
-            href="/register" 
-            className="btn-primary w-full sm:w-auto text-base hover:shadow-primary-500/40 hover:shadow-2xl"
-          >
-            Get Started For Free
-          </Link>
-          <Link 
             href="/login" 
-            className="btn-secondary w-full sm:w-auto text-base backdrop-blur-xl bg-white/50"
+            className="btn-primary w-full sm:w-auto text-base"
           >
             Log in to Dashboard
           </Link>
