@@ -35,7 +35,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const res = await fetch("/api/auth/me", { credentials: "include" });
         if (res.status === 401) {
           setUser(null);
-          if (pathname !== "/login") {
+
+          // Don't redirect from public auth pages (register/login)
+          const authPublicPaths = ["/login", "/register"];
+          if (!authPublicPaths.includes(pathname)) {
             router.push("/login");
           }
           return;
