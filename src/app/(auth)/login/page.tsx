@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { encryptObject } from "@/lib/encryption";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function LoginPage() {
   const { loginState } = useAuth();
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -24,6 +26,7 @@ export default function LoginPage() {
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ encryptedData }),
       });
 
@@ -33,7 +36,7 @@ export default function LoginPage() {
       }
 
       loginState(data.user);
-      window.location.href = "/dashboard";
+      router.push("/dashboard");
     } catch (err: any) {
       setError(err.message);
     } finally {

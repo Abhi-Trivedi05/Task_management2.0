@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { encryptObject } from "@/lib/encryption";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function RegisterPage() {
   const { loginState } = useAuth();
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,6 +27,7 @@ export default function RegisterPage() {
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ encryptedData }),
       });
 
@@ -34,7 +37,7 @@ export default function RegisterPage() {
       }
 
       loginState(data.user);
-      window.location.href = "/dashboard";
+      router.push("/dashboard");
     } catch (err: any) {
       setError(err.message);
     } finally {
