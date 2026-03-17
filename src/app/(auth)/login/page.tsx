@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useAuth } from "@/lib/AuthContext";
-import { encryptObject } from "@/lib/encryption";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -20,14 +19,11 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      // Secure the payload
-      const encryptedData = encryptObject({ email, password });
-
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ encryptedData }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();

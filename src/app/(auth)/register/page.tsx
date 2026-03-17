@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useAuth } from "@/lib/AuthContext";
-import { encryptObject } from "@/lib/encryption";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -21,14 +20,11 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      // Secure the payload
-      const encryptedData = encryptObject({ username, email, password });
-
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ encryptedData }),
+        body: JSON.stringify({ username, email, password }),
       });
 
       const data = await res.json();

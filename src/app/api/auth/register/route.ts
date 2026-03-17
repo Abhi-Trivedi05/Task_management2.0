@@ -3,7 +3,6 @@ import connectToDatabase from "@/lib/db";
 import { User } from "@/models/User";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
-import { decryptPayload } from "@/lib/encryption";
 import { setAuthCookie, signToken } from "@/lib/auth";
 
 // Schema for input validation
@@ -18,22 +17,7 @@ export async function POST(req: Request) {
     await connectToDatabase();
 
     const body = await req.json();
-    
-    // Check if payload is encrypted
-    let payload = body;
-    if (body.encryptedData) {
-      const decryptedStr = decryptPayload(body.encryptedData);
-      if (!decryptedStr) {
-        return NextResponse.json(
-          { error: "Invalid encrypted payload" },
-          { status: 400 }
-        );
-      }
-      payload = JSON.parse(decryptedStr);
-    }
-
-    // Validate using Zod
-    const validatedData = registerSchema.safeParse(payload);
+    const validatedData = registerSchema.safeParse(body);
     if (!validatedData.success) {
       return NextResponse.json(
         { error: validatedData.error.errors[0].message },
